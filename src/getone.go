@@ -6,13 +6,17 @@ func getone(lin string, i, num *int, status *stcode) stcode {
   istart = *i;
   *num = 0;
   if getnum(lin, i, num, status) == OK {    /*  1st term */
-    for {
+    for *i < len(lin) {
       skipbl(lin, i)
+      if *i >= len(lin) { *status = ENDDATA; break }
       if lin[*i] != PLUS && lin[*i] != MINUS {
         *status = ENDDATA
       } else {
-        if lin[*i] == PLUS { mul = +1 } else { mul = -1 }
-        *i++
+        if *i < len(lin) && lin[*i] == PLUS {
+          mul = +1
+        } else {
+          mul = -1
+        }; *i++
         if getnum(lin, i, &pnum, status) == OK {
           *num = *num + mul * pnum
         }
