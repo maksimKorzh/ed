@@ -27,22 +27,26 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
     }
   } else if lin[*i] == ACMD {
     if lin[*i+1] == NEWLINE {
-      *status = doappend(line2, glob)
+      *status = lnappend(line2, glob)
     }
-  }
+
 //    else if (lin[i] = CCMD) then begin
 //        if (lin[i+1] = NEWLINE) then 
 //          if (default(curln, curln, status) = OK) then
 //          if (lndelete(line1, line2, status) = OK) then
 //            status := append(prevln(line1), glob)
 //    end
-//    else if (lin[i] = DCMD) then begin
-//        if (ckp(lin, i+1, pflag, status) = OK) then 
-//          if (default(curln, curln, status) = OK) then
-//          if (lndelete(line1, line2, status) = OK) then
-//          if (nextln(curln) <> 0) then
-//            curln := nextln(curln)
-//    end
+  } else if lin[*i] == DCMD {
+    //if ckp(lin, i+1, pflag, status) == OK {
+      if setdef(curln, curln, status) == OK {
+        if lndelete(line1, line2, status) == OK {
+          if nextln(curln) != 0 {
+            curln = nextln(curln)
+          }
+        }
+      }
+    //}
+  }
 //    else if (lin[i] = ICMD) then begin
 //        if (lin[i+1] = NEWLINE) then begin
 //            if (line2 = 0) then

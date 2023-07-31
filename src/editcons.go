@@ -23,4 +23,5 @@ const (
   PCMD     = 'p'
   QCMD     = 'q'
   ACMD     = 'a'
+  DCMD     = 'd'
 )

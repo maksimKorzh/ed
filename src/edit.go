@@ -9,6 +9,10 @@ func main() {
     buftype{ txt: "line1", mark: false },
     buftype{ txt: "line2", mark: false },
     buftype{ txt: "line3", mark: false },
+    buftype{ txt: "line4", mark: false },
+    buftype{ txt: "line5", mark: false },
+    buftype{ txt: "line6", mark: false },
+    buftype{ txt: "line7", mark: false },
   }
   //buf = append(buf, buftype{txt: "", mark: false})
   curln = 0

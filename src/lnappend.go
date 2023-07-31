@@ -1,11 +1,10 @@
 package main
 //import "fmt"
-/* doappend -- append lines after "line" */
-func doappend(line int, glob bool) stcode {
+/* lnappend -- append lines after "line" */
+func lnappend(line int, glob bool) stcode {
   var inline string
   var stat stcode
   var done bool
-
   if (glob) {
     stat = ERR
   } else {
