@@ -14,9 +14,9 @@ func main() {
     buftype{ txt: "line6", mark: false },
     buftype{ txt: "line7", mark: false },
   }
-  //buf = append(buf, buftype{txt: "", mark: false})
   curln = 0
   lastln = len(buf)-1
+  savefile = "some_file.go"
 
   var cursave, i int
   var status stcode

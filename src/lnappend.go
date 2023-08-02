@@ -13,9 +13,10 @@ func lnappend(line int, glob bool) stcode {
     done = false
     for done == false && stat == OK {
       inline = getline()
-      if len(inline) == 1 {
-        stat = ENDDATA
-      } else if inline[0] == PERIOD && inline[1] == NEWLINE {
+      //if len(inline) == 1 {
+      //  stat = ENDDATA
+      //} else 
+      if inline[0] == PERIOD && inline[1] == NEWLINE {
         done = true
       } else if puttxt(inline) == ERR {
         stat = ERR

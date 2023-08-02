@@ -24,4 +24,9 @@ const (
   QCMD     = 'q'
   ACMD     = 'a'
   DCMD     = 'd'
+  CCMD     = 'c'
+  ICMD     = 'i'
+  EQCMD    = '='
+  MCMD     = 'm'
+  ECMD     = 'e'
 )
