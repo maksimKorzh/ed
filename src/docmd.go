@@ -10,15 +10,21 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
   var pflag bool
   pflag = false;    /* may be set by d, m, s */
   *status = ERR;
-  if lin[*i] == PCMD {
+  if lin[*i] == COMMA {
+    line1 = 1
+    line2 = lastln
+    nlines = 1
+    *i++
+  }
+  if lin[*i] == PCMD || lin[*i] == NCMD {
     if lin[*i+1] == NEWLINE {
       if setdef(curln, curln, status) == OK {
-        *status = doprint(line1, line2)
+        *status = doprint(line1, line2, rune(lin[*i]))
       }
     }
   } else if lin[*i] == NEWLINE {
     if nlines == 0 { line2 = nextln(curln) }
-    *status = doprint(line2, line2)
+    *status = doprint(line2, line2, PCMD)
   } else if lin[*i] == QCMD {
     if lin[*i+1] == NEWLINE && nlines == 0 && glob == false {
       *status = ENDDATA
@@ -87,29 +93,28 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
         *status = doread(0, fil)
       }
     }
+  } else if lin[*i] == FCMD {
+    if nlines == 0 {
+      if getfn(lin, i, &fil) == OK {
+        savefile = fil
+        fmt.Println(savefile)
+        *status = OK
+      }
+    }
+  } else if lin[*i] == RCMD {
+    if getfn(lin, i, &fil) == OK {
+      *status = doread(line2, fil)
+    }
+  } else if lin[*i] == WCMD {
+    if getfn(lin, i, &fil) == OK {
+      if setdef(1, lastln, status) == OK {
+        *status = dowrite(line1, line2, fil)
+      }
+    }
   }
-//    else if (lin[i] = FCMD) then begin
-//        if (nlines = 0) then 
-//          if (getfn(lin, i, fil) = OK) then begin
-//            scopy(fil, 1, savefile, 1);
-//            putstr(savefile, STDOUT);
-//            putc(NEWLINE);
-//            status := OK
-//        end
-//    end
-//    else if (lin[i] = RCMD) then begin
-//        if (getfn(lin, i, fil) = OK) then 
-//            status := doread(line2, fil)
-//    end
-//    else if (lin[i] = WCMD) then begin
-//        if (getfn(lin, i, fil) = OK) then 
-//          if (default(1, lastln, status) = OK) then
-//            status := dowrite(line1, line2, fil)
-//    end;
-//    { else status is ERR }
-//
+  /* else status is ERR */
   if *status == OK && pflag {
-    *status = doprint(curln, curln)
+    *status = doprint(curln, curln, PCMD)
   }
   return *status
 }

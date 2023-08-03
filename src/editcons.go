@@ -21,6 +21,7 @@ const (
   MINUS    = '-'
   NEWLINE  = '\n'
   PCMD     = 'p'
+  NCMD     = 'n'
   QCMD     = 'q'
   ACMD     = 'a'
   DCMD     = 'd'
@@ -29,4 +30,7 @@ const (
   EQCMD    = '='
   MCMD     = 'm'
   ECMD     = 'e'
+  FCMD     = 'f'
+  RCMD     = 'r'
+  WCMD     = 'w'
 )
