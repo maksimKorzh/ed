@@ -75,8 +75,39 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
         }
       }
     }
-//  }
-
+  } else if lin[*i] == TCMD {
+    *i++
+    if getone(lin, i, &line3, status) == ENDDATA { *status = ERR }
+    if *status == OK {
+      if ckp(lin, i, &pflag, status) == OK {
+        if setdef(curln, curln, status) == OK {
+          *status = dup(&line3)
+        }
+      }
+    }
+  } else if lin[*i] == YCMD {
+    *i++
+    if ckp(lin, i, &pflag, status) == OK {
+      if setdef(curln, curln, status) == OK {
+        cp(line1, line2)
+        *status = OK
+      }
+    }
+  } else if lin[*i] == XCMD {
+    *i++
+    if ckp(lin, i, &pflag, status) == OK {
+      curln = line2
+      if setdef(curln, curln, status) == OK {
+        if len(cpb) > 0 {
+          for i := 0; i < len(cpb); i++ {
+            puttxt(cpb[i].txt)
+          }
+          *status = OK
+        } else {
+          *status = ERR
+        }
+      }
+    }
 //    else if (lin[i] = SCMD) then begin
 //        i := i + 1;
 //        if (optpat(lin, i) = OK) then 

@@ -13,8 +13,11 @@ func getnum(lin string, i, num *int, status *stcode) stcode {
     } else if lin[*i] == LASTLINE {
       *num = lastln
     } else if lin[*i] == SCAN || lin[*i] == BACKSCAN {
-      //if (optpat(lin, i) == ERR) { status = ERR  /* build pattern */
-      //} else { status = patscan(lin[*i], num) }
+      if (optpat(lin, i) == ERR) {
+        *status = ERR  /* build pattern */
+      } else {
+        *status = patscan(rune(lin[*i]), num)
+      }
     } else { *status = ENDDATA }
   }
   if (*status == OK) { *i++ }    /* next character to be examined */

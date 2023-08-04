@@ -2,6 +2,7 @@ package main
 
 /* editvar -- variables for edit */
 var buf[]buftype      /* editor's buffer */
+var cpb[]buftype      /* copy buffer */
 
 var line1 int         /* first line number */
 var line2 int         /* second line number */
