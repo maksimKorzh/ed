@@ -32,6 +32,7 @@ const (
   TCMD     = 't'
   YCMD     = 'y'
   XCMD     = 'x'
+  SCMD     = 's'
   ECMD     = 'e'
   FCMD     = 'f'
   RCMD     = 'r'

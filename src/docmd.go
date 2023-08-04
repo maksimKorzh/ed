@@ -1,12 +1,12 @@
 package main
 
 import "fmt"
+import "strings"
 
 /* docmd -- handle all commands except globals */
 func docmd (lin string, i *int, glob bool, status *stcode) stcode {
-  var fil string   //, sub string
+  var fil, sub string
   var line3 int
-  //var gflag, pflag bool
   var pflag bool
   pflag = false;    /* may be set by d, m, s */
   *status = ERR;
@@ -107,15 +107,20 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
           *status = ERR
         }
       }
+    } 
+  } else if lin[*i] == SCMD {
+    *i++
+    if optpat(lin, i) == OK {
+      sub = strings.Split(lin[*i:], string(lin[*i]))[1]
+      *i += len(sub)+2
+      if *i < len(lin) {
+        if ckp(lin, i, &pflag, status) == OK {
+          if setdef(1, lastln, status) == OK {
+            *status = subst(sub)
+          }
+        }
+      }
     }
-//    else if (lin[i] = SCMD) then begin
-//        i := i + 1;
-//        if (optpat(lin, i) = OK) then 
-//          if (getrhs(lin, i, sub, gflag) = OK) then
-//          if (ckp(lin, i+1, pflag, status) = OK) then
-//          if (default(curln, curln, status) = OK) then
-//            status := subst(sub, gflag, glob)
-//    end
   } else if lin[*i] == ECMD {
     if nlines == 0 {
       if getfn(lin, i, &fil) == OK {
