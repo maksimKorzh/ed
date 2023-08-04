@@ -1,2 +1,2 @@
-export GOOS=windows && go build -o edit.exe *.go
-export GOOS=linux && go build -o edit *.go
+#!/bin/bash
+go build -o edit *.go

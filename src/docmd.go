@@ -4,7 +4,7 @@ import "fmt"
 import "strings"
 
 /* docmd -- handle all commands except globals */
-func docmd (lin string, i *int, glob bool, status *stcode) stcode {
+func docmd (lin string, i *int, status *stcode) stcode {
   var fil, sub string
   var line3 int
   var pflag bool
@@ -26,18 +26,18 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
     if nlines == 0 { line2 = nextln(curln) }
     *status = doprint(line2, line2, PCMD)
   } else if lin[*i] == QCMD {
-    if lin[*i+1] == NEWLINE && nlines == 0 && glob == false {
+    if lin[*i+1] == NEWLINE && nlines == 0 {
       *status = ENDDATA
     }
   } else if lin[*i] == ACMD {
     if lin[*i+1] == NEWLINE {
-      *status = lnappend(line2, glob)
+      *status = lnappend(line2)
     }
   } else if lin[*i] == CCMD {
     if lin[*i+1] == NEWLINE {
       if setdef(curln, curln, status) == OK {
         if lndelete(line1, line2, status) == OK {
-          *status = lnappend(prevln(line1), glob)
+          *status = lnappend(prevln(line1))
         }
       }
     }
@@ -55,9 +55,9 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
   } else if lin[*i] == ICMD {
     if lin[*i+1] == NEWLINE {
       if line2 == 0 {
-        *status = lnappend(0, glob)
+        *status = lnappend(0)
       } else {
-        *status = lnappend(prevln(line2), glob)
+        *status = lnappend(prevln(line2))
       }
     }
   } else if lin[*i] == EQCMD {
@@ -97,15 +97,13 @@ func docmd (lin string, i *int, glob bool, status *stcode) stcode {
     *i++
     if ckp(lin, i, &pflag, status) == OK {
       curln = line2
-      if setdef(curln, curln, status) == OK {
-        if len(cpb) > 0 {
-          for i := 0; i < len(cpb); i++ {
-            puttxt(cpb[i].txt)
-          }
-          *status = OK
-        } else {
-          *status = ERR
+      if len(cpb) > 0 {
+        for i := 0; i < len(cpb); i++ {
+          puttxt(cpb[i].txt)
         }
+        *status = OK
+      } else {
+        *status = ERR
       }
     } 
   } else if lin[*i] == SCMD {
