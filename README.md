@@ -11,3 +11,6 @@ implemented however the behaviour of "s" (substitute) command<br>
 is indeed global, so you can say "1,$s/pat/sub/" and have the<br>
 pattern "pat" being replaced with "sub" string. Also "!" command is<br>
 not available since I simply don't need it<br>
+
+# Video demo
+https://www.youtube.com/watch?v=7g4x2wNsoa0
