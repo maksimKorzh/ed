@@ -109,12 +109,14 @@ func docmd (lin string, i *int, status *stcode) stcode {
   } else if lin[*i] == SCMD {
     *i++
     if optpat(lin, i) == OK {
-      sub = strings.Split(lin[*i:], string(lin[*i]))[1]
-      *i += len(sub)+2
       if *i < len(lin) {
-        if ckp(lin, i, &pflag, status) == OK {
-          if setdef(1, lastln, status) == OK {
-            *status = subst(sub)
+        sub = strings.Split(lin[*i:], string(lin[*i]))[1]
+        *i += len(sub)+2
+        if *i < len(lin) {
+          if ckp(lin, i, &pflag, status) == OK {
+            if setdef(1, lastln, status) == OK {
+              *status = subst(sub)
+            }
           }
         }
       }
